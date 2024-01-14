@@ -1,16 +1,33 @@
-/* body{
-  background-color: #6c747e;
-} */
-h1 {
-  display: flex;
-  justify-content: center;
-  margin-top: 90px;
+h1, P{
+  color: #9ba3e4;
+  font-weight: bolder;
+  background-color: black;
+  /* width: fit-content; */
+/* border: 5px solid green; */
+/* padding: 10%; */
 }
-
+h1 {
+  /* display: flex;
+  justify-content: center; */
+  margin-top: 90px;
+  
+}
+.intro{
+  /* width: fit-content; */
+  /* margin: 2% 20%; */
+    display: flex;
+  justify-content: center;
+    /* border: 5px solid green; */
+  width: fit-content;
+  margin-left: 35%;
+}
 #instruction {
   display: flex;
   justify-content: center;
   font-size: 13pt;
+  /* border: 5px solid green; */
+  width: fit-content;
+  margin-left: 37%;
   /* margin-top: 90px; */
 }
 .container {
@@ -18,7 +35,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   border-radius: 13px;
-  /* border: 3px solid black; */
+  border: 3px solid black;
   /* background-color: rgb(71, 107, 90); */
   align-items: center;
   width: 50rem;
@@ -28,6 +45,23 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+#from_rate_icon, #to_rate, #equal{
+  font-size: 31px;
+    color: #9ba3e4;
+  font-weight: bolder;
+  background-color: black;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+#equal{
+  font-size: 30px;
+  margin-top: 2px;
+   margin-bottom: 2px;
 }
 
 .inpt {

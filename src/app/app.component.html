@@ -1,5 +1,5 @@
-<h1>Currency Exchange Calculator</h1>
-<p id="instruction">
+<h1 class="intro">Currency Exchange Calculator</h1>
+<p id="instruction" >
   Choose the currency and the amount to get the exchange rate
 </p>
 <div class="container">
@@ -9,13 +9,19 @@
 
   <div class="switchElement">
     <div id="current-rate">
-      <span id="from_rate"
-        >{{ from_rate }}
-        <span id="from_rate_icon">{{ from_rate_icon }} </span></span
-      >
-      =
-      <span id="to_rate">{{ to_rate }} </span>
-      <span id="to_rate_icon"> {{ to_rate_icon }}</span>
+      <span id="from_rate">
+        {{ from_rate }} 
+        <span id="from_rate_icon">
+          {{ from_rate_icon }} 
+        </span>
+      </span>
+      <p id="equal">=</p>
+      <span id="to_rate">
+        {{ to_rate }} 
+      </span>
+      <span id="to_rate_icon"> 
+        {{ to_rate_icon }}
+      </span>
     </div>
   </div>
 
@@ -23,7 +29,7 @@
   <div class="btn-grp input-group mb-3 user-group">
     <h3>
       <div id="from-group-container" class="dropdown input-group-prepend">
-        From:
+       <p>From:</p> 
         <input
           class="form-control inpt"
           name=""
@@ -213,7 +219,7 @@
 
     <h3>
       <div id="to-group-container" class="dropdown input-group-prepend">
-        To:
+       <p>To:</p> 
         <input
           class="form-control inpt"
           name=""

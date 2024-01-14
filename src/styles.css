@@ -3,3 +3,13 @@ body{
     /* background-color: #6c747e; */
     /* margin-bottom: 500px; */
   }
+
+  body{
+    background-image: url("..//src/assets/17454.jpg");
+    /* background-color: blue; */
+    background-size: cover;
+    background-position: 10% 29%;
+    background-repeat: no-repeat;
+  }
+  
+  
