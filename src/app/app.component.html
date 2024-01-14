@@ -1,8 +1,15 @@
-<h1 class="intro">Currency Exchange Calculator</h1>
-<p id="instruction" >
+<!-- <div class="wrapper">
+  <h1 class="intro">Currency Exchange Calculator</h1>
+  <p id="instruction" >
   Choose the currency and the amount to get the exchange rate
 </p>
+</div> -->
+
 <div class="container">
+    <h1 class="intro">Currency Exchange Calculator</h1>
+  <p id="instruction" class="intro" >
+  Choose the currency and the amount to get the exchange rate
+</p>
   <!-- <h1>Currency Exchange Calculator</h1> -->
   <img src="../assets/icons8-currency-exchange-80.png" alt="" />
   <!-- {{}} -->
@@ -16,12 +23,14 @@
         </span>
       </span>
       <p id="equal">=</p>
-      <span id="to_rate">
-        {{ to_rate }} 
-      </span>
-      <span id="to_rate_icon"> 
-        {{ to_rate_icon }}
-      </span>
+      <!-- <div id="to_container"> -->
+        <span id="to_rate">
+          {{ to_rate }} 
+        </span>
+        <span id="to_rate_icon"> 
+          {{ to_rate_icon }}
+        </span>
+      <!-- </div> -->
     </div>
   </div>
 
@@ -40,8 +49,7 @@
         <select
           name=""
           id="first-currency"
-          class="btn btn-secondary dropdown-toggle"
-        >
+          class="btn btn-secondary dropdown-toggle">
           <option value="AED">United Arab Emirates Dirham</option>
           <option value="AFN">Afghan Afghani</option>
           <option value="ALL">Albanian Lek</option>
@@ -408,6 +416,6 @@
   </div>
   <span>
     <!-- <button id="swap" class="btn btn-secondary" (click)="switch()">Swap</button> -->
-    <button class="btn btn-secondary" (click)="calculate()">Convert</button>
+    <button class="btn btn-secondary" id="convert" (click)="calculate()">Convert</button>
   </span>
 </div>
