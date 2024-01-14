@@ -91,6 +91,15 @@ input::-webkit-inner-spin-button {
 
 #from_rate{
   margin-left: 30%;
+    font-size: 31px;
+    color: #9ba3e4;
+  font-weight: bolder;
+  background-color: black;
+  font-weight: bolder;
+  /* display: flex; */
+  /* justify-content: center; */
+  padding-bottom: 0;
+  width: fit-content;
 }
 
 #from_rate_icon{
