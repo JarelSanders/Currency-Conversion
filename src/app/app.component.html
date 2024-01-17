@@ -7,25 +7,30 @@
   <img src="../assets/icons8-currency-exchange-80.png" alt="" />
   <!-- {{}} -->
 
-  <div class="switchElement">
-    <div id="current-rate">
+<div class="switchElement">
+  <div id="current-rate">
+    <div id="from-container">
+      <span id="from_rate_constant" style="display: none;">1</span>
       <span id="from_rate">
         {{ from_rate }} 
         <span id="from_rate_icon">
           {{ from_rate_icon }} 
         </span>
       </span>
-      <p id="equal">=</p>
-      <!-- <div id="to_container"> -->
-        <span id="to_rate">
-          {{ to_rate }} 
-        </span>
-        <span id="to_rate_icon"> 
-          {{ to_rate_icon }}
-        </span>
-      <!-- </div> -->
+    </div>
+    <p id="equal">=</p>
+    <div id="to-container">
+      <span id="to_rate">
+        {{ to_rate }} 
+      </span>
+      <span id="to_rate_icon"> 
+        {{ to_rate_icon }}
+      </span>
     </div>
   </div>
+</div>
+
+
 
   <br />
   <div class="btn-grp input-group mb-3 user-group">
