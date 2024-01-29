@@ -6,11 +6,13 @@
   <!-- <h1>Currency Exchange Calculator</h1> -->
   <img src="../assets/icons8-currency-exchange-80.png" alt="" />
   <!-- {{}} -->
+<!-- <span id="from_rate_constant" >1</span> -->
 
-<div class="switchElement">
+
+<!-- <div class="switchElement">
   <div id="current-rate">
     <div id="from-container">
-      <span id="from_rate_constant" style="display: none;">1</span>
+      
       <span id="from_rate">
         {{ from_rate }} 
         <span id="from_rate_icon">
@@ -28,8 +30,34 @@
       </span>
     </div>
   </div>
-</div>
+</div> -->
+      <span id="from_rate_constant" >1</span>
 
+<div class="switchElement">
+  <div id="current-rate">       
+    <div id="from-container">
+      <!-- <div id="from_span_container"> -->
+        <!-- <span id="from_rate_constant" >1</span> -->
+        <span id="from_rate">
+          {{ from_rate }} 
+          <span id="from_rate_icon">
+            {{ from_rate_icon }} 
+          </span>
+        </span>
+      <!-- </div> -->
+   
+    </div>
+    <p id="equal">=</p>
+    <div id="to-container">
+      <span id="to_rate">
+        {{ to_rate }} 
+      </span>
+      <span id="to_rate_icon"> 
+        {{ to_rate_icon }}
+      </span>
+    </div>
+  </div>
+</div>
 
 
   <br />

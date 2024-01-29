@@ -42,7 +42,24 @@ export class AppComponent implements OnInit {
     } else {
       //select tag dropdown
 
+
+      let staticCurrency = document.getElementById("from_rate_constant");
+      let oneCurrency =  (<HTMLInputElement>staticCurrency).style.display = "block";
+
+      let equals = document.getElementById("equal");
+      let showEqual =  (<HTMLInputElement>equals).style.display = "block";
+
+
+
+
       var myHeaders = new Headers();
+
+        // Display the 'from_rate_constant' element
+  const fromRateConstant = document.getElementById("from_rate_constant") as HTMLElement;
+  if (fromRateConstant) {
+    fromRateConstant.style.display = "show"; // or "block" depending on your preference
+  }
+
 
       myHeaders.append("apikey", "xXma0EqQVkLcrfU49m9VxVTmSOaPdmrG");
 
@@ -84,9 +101,13 @@ export class AppComponent implements OnInit {
 
       ((<HTMLInputElement>document.getElementById("to_rate_icon")).innerText =
         to_rate_icon),
-        ((<HTMLInputElement>(
+         ((<HTMLInputElement>(
           document.getElementById("from_rate_icon")
-        )).innerText = "1 " + from_rate_icon);
+        )).innerText = from_rate_icon);
+
+        // ((<HTMLInputElement>(
+        //   document.getElementById("from_rate_icon")
+        // )).innerText = "1 " + from_rate_icon);
 
       // (<HTMLInputElement>document.getElementById('second-amount')).textContent = result.query.amount;
 
@@ -97,9 +118,9 @@ export class AppComponent implements OnInit {
   };
 
 
-  switch(): void {
+  switch00(): void {
       // Call calculate to update the rates before swapping
-    this.calculate();
+    // this.calculate();
 
     //works
     const fromContainer = document.getElementById('from-container');
@@ -131,4 +152,52 @@ export class AppComponent implements OnInit {
       secondCurrencySelect.value = tempCurrency;
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  switch(): void {
+  // Call calculate to update the rates before swapping
+  this.calculate();
+
+  // Get references to the input elements
+  const firstAmountInput = document.getElementById('first-amount') as HTMLInputElement;
+  const secondAmountInput = document.getElementById('second-amount') as HTMLInputElement;
+
+  // Get references to the select elements
+  const firstCurrencySelect = document.getElementById('first-currency') as HTMLSelectElement;
+  const secondCurrencySelect = document.getElementById('second-currency') as HTMLSelectElement;
+
+  // Check for null using optional chaining
+  const fromContainer = document.getElementById('from-container');
+  const toContainer = document.getElementById('to-container');
+
+  if (fromContainer && toContainer) {
+    // Swap the HTML content of container elements
+    const tempHTML = fromContainer.innerHTML;
+    fromContainer.innerHTML = toContainer.innerHTML;
+    toContainer.innerHTML = tempHTML;
+
+    // Swap the values of input elements
+    const tempAmount = firstAmountInput.value;
+    firstAmountInput.value = secondAmountInput.value;
+    secondAmountInput.value = tempAmount;
+
+    // Swap the values of select elements
+    const tempCurrency = firstCurrencySelect.value;
+    firstCurrencySelect.value = secondCurrencySelect.value;
+    secondCurrencySelect.value = tempCurrency;
+  }
+}
+
 }
