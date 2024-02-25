@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
   }
 
 
-      myHeaders.append("apikey", "xXma0EqQVkLcrfU49m9VxVTmSOaPdmrG");
+      myHeaders.append("apikey", "");
 
       var requestOptions: any = {
         method: "GET",
