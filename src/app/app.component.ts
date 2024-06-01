@@ -21,155 +21,110 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  calculate = (): void => {
-    let currencyOne = document.getElementById("first-currency"); //select tag dropdown
-    let currencyTwo = document.getElementById("second-currency"); //select tag dropdown
-    let amountOne = document.getElementById("first-amount"); //from input tag
-    let amountTwo = document.getElementById("second-amount"); //to input tag
-    let rate = document.getElementById("current_rate");
-    let swap = document.getElementById("swap");
-    let from_rate_icon_ = document.getElementById("first-currency");
-    let to_rate_icon_ = document.getElementById("second-currency");
+calculate = (): void => {
+  // Get references to input and select elements
+  const currencyOne = document.getElementById("first-currency") as HTMLSelectElement;
+  const currencyTwo = document.getElementById("second-currency") as HTMLSelectElement;
+  const amountOne = document.getElementById("first-amount") as HTMLInputElement;
+  const amountTwo = document.getElementById("second-amount") as HTMLInputElement;
 
-    let from_rate_icon = (<HTMLInputElement>from_rate_icon_).value;
-    let to_rate_icon = (<HTMLInputElement>to_rate_icon_).value;
-    let first_currency = (<HTMLInputElement>currencyOne).value;
-    let second_currency = (<HTMLInputElement>currencyTwo).value;
-    let final_amount = (<HTMLInputElement>amountOne).value;
-    let amountTwo_ = (<HTMLInputElement>amountTwo).value;
-    if (final_amount === "") {
-      alert("Enter a value");
-    } else {
-      //select tag dropdown
+  // Get current values from input and select elements
+  const from_rate_icon = currencyOne.value;
+  const to_rate_icon = currencyTwo.value;
+  const first_currency = currencyOne.value;
+  const second_currency = currencyTwo.value;
+  const final_amount = amountOne.value;
 
-
-      let staticCurrency = document.getElementById("from_rate_constant");
-      let oneCurrency =  (<HTMLInputElement>staticCurrency).style.display = "block";
-
-      let equals = document.getElementById("equal");
-      let showEqual =  (<HTMLInputElement>equals).style.display = "block";
-
-
-
-
-      var myHeaders = new Headers();
-
-        // Display the 'from_rate_constant' element
-  const fromRateConstant = document.getElementById("from_rate_constant") as HTMLElement;
-  if (fromRateConstant) {
-    fromRateConstant.style.display = "show"; // or "block" depending on your preference
+  // Check if an amount is entered
+  if (final_amount === "") {
+    alert("Enter a value");
+    return;
   }
 
-
-      myHeaders.append("apikey", "");
-
-      var requestOptions: any = {
-        method: "GET",
-        redirect: "follow",
-        headers: myHeaders,
-      };
-
-      const api_url = `https://api.apilayer.com/fixer/convert?to=${second_currency}&from=${first_currency}&amount=${final_amount}`;
-      fetch(api_url, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-             if (result.query && result.query.amount) {
-      console.log(
-        result.query.amount,
-        result.query.from,
-        result.info.rate,
-        result.query.to,
-        result.result
-      );
-
-      // Update the second amount input value
-      const secondAmountInput = document.getElementById("second-amount") as HTMLInputElement;
-      if (secondAmountInput) {
-        secondAmountInput.value = result.result;
-      }
-
-      // Update the 'to_rate' element's innerHTML
-      const toRateElement = document.getElementById("to_rate") as HTMLElement;
-      if (toRateElement) {
-        toRateElement.innerHTML = result.info.rate;
-      }
-    } else {
-      console.error('Query or amount is undefined in the result:', result);
-    }
-  })
-  .catch((error) => console.log("error", error));
-
-      ((<HTMLInputElement>document.getElementById("to_rate_icon")).innerText =
-        to_rate_icon),
-         ((<HTMLInputElement>(
-          document.getElementById("from_rate_icon")
-        )).innerText = from_rate_icon);
-
-        // ((<HTMLInputElement>(
-        //   document.getElementById("from_rate_icon")
-        // )).innerText = "1 " + from_rate_icon);
-
-      // (<HTMLInputElement>document.getElementById('second-amount')).textContent = result.query.amount;
-
-      currencyOne?.addEventListener("change", this.calculate);
-      currencyTwo?.addEventListener("change", this.calculate);
-      amountOne?.addEventListener("input", this.calculate);
-    }
-  };
-
-
-  switch00(): void {
-      // Call calculate to update the rates before swapping
-    // this.calculate();
-
-    //works
-    const fromContainer = document.getElementById('from-container');
-    const toContainer = document.getElementById('to-container');
-
-    // Get references to the input elements
-    const firstAmountInput = document.getElementById('first-amount') as HTMLInputElement;
-    const secondAmountInput = document.getElementById('second-amount') as HTMLInputElement;
-
-    // Get references to the select elements
-    const firstCurrencySelect = document.getElementById('first-currency') as HTMLSelectElement;
-    const secondCurrencySelect = document.getElementById('second-currency') as HTMLSelectElement;
-
-    // Check for null using optional chaining
-    if (fromContainer && toContainer) {
-      // Swap the HTML content of container elements
-      
-      const tempHTML = fromContainer.innerHTML;
-      fromContainer.innerHTML = toContainer.innerHTML;
-      toContainer.innerHTML = tempHTML;
-          // Swap the values of input elements
-      const tempAmount = firstAmountInput.value;
-      firstAmountInput.value = secondAmountInput.value;
-      secondAmountInput.value = tempAmount;
-
-      // Swap the values of select elements
-      const tempCurrency = firstCurrencySelect.value;
-      firstCurrencySelect.value = secondCurrencySelect.value;
-      secondCurrencySelect.value = tempCurrency;
-    }
+  // Display static "1" in the from_rate_constant element
+  const staticCurrency = document.getElementById("from_rate_constant") as HTMLElement;
+  if (staticCurrency) {
+    staticCurrency.style.display = "block";
   }
 
+  // Display the equals sign
+  const equals = document.getElementById("equal") as HTMLElement;
+  if (equals) {
+    equals.style.display = "block";
+  }
+
+  // Prepare the request URL for the backend API
+  const api_url = `/api?to=${second_currency}&from=${first_currency}&amount=${final_amount}`;
+
+  // Make the API request to the backend
+  fetch(api_url)
+    .then((response) => {
+      if (!response.ok) {
+        // If response is not ok, throw an error
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json(); // Try to parse the response as JSON
+    })
+    .then((result) => {
+      // Process API response
+      if (result.query && result.query.amount) {
+        console.log(
+          result.query.amount,
+          result.query.from,
+          result.info.rate,
+          result.query.to,
+          result.result
+        );
+
+        // Update the converted amount
+        if (amountTwo) {
+          amountTwo.value = result.result;
+        }
+
+        // Update the exchange rate
+        const toRateElement = document.getElementById("to_rate") as HTMLElement;
+        if (toRateElement) {
+          toRateElement.innerHTML = result.info.rate;
+        }
+      } else {
+        console.error('Query or amount is undefined in the result:', result);
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+      // Log the full response if it is not JSON
+      fetch(api_url)
+        .then((response) => response.text())
+        .then((text) => console.log("Response text:", text))
+        .catch((err) => console.log("Error fetching response text:", err));
+    });
+
+  // Update currency icons
+  const toRateIconElement = document.getElementById("to_rate_icon") as HTMLElement;
+  const fromRateIconElement = document.getElementById("from_rate_icon") as HTMLElement;
+  if (toRateIconElement) {
+    toRateIconElement.innerText = to_rate_icon;
+  }
+  if (fromRateIconElement) {
+    fromRateIconElement.innerText = from_rate_icon;
+  }
+
+  // Add event listeners for changes in currency and amount inputs
+  if (currencyOne) {
+    currencyOne.addEventListener("change", this.calculate);
+  }
+  if (currencyTwo) {
+    currencyTwo.addEventListener("change", this.calculate);
+  }
+  if (amountOne) {
+    amountOne.addEventListener("input", this.calculate);
+  }
+};
 
 
 
-
-
-
-
-
-
-
-
-
-
-  switch(): void {
-  // Call calculate to update the rates before swapping
-  this.calculate();
-
+   
+switch(): void {
   // Get references to the input elements
   const firstAmountInput = document.getElementById('first-amount') as HTMLInputElement;
   const secondAmountInput = document.getElementById('second-amount') as HTMLInputElement;
@@ -178,15 +133,26 @@ export class AppComponent implements OnInit {
   const firstCurrencySelect = document.getElementById('first-currency') as HTMLSelectElement;
   const secondCurrencySelect = document.getElementById('second-currency') as HTMLSelectElement;
 
-  // Check for null using optional chaining
-  const fromContainer = document.getElementById('from-container');
-  const toContainer = document.getElementById('to-container');
+  // Get references to the from and to container elements
+  const fromRateElement = document.getElementById('from_rate');
+  const fromRateIconElement = document.getElementById('from_rate_icon');
+  const toRateElement = document.getElementById('to_rate');
+  const toRateIconElement = document.getElementById('to_rate_icon');
+  const fromRateConstantElement = document.getElementById('from_rate_constant');
 
-  if (fromContainer && toContainer) {
-    // Swap the HTML content of container elements
-    const tempHTML = fromContainer.innerHTML;
-    fromContainer.innerHTML = toContainer.innerHTML;
-    toContainer.innerHTML = tempHTML;
+  if (fromRateElement && fromRateIconElement && toRateElement && toRateIconElement) {
+    // Swap the rates
+    const tempRate = fromRateElement.innerHTML;
+    fromRateElement.innerHTML = toRateElement.innerHTML;
+    toRateElement.innerHTML = tempRate;
+
+    // Swap the icons
+    const tempIcon = fromRateIconElement.innerHTML;
+    fromRateIconElement.innerHTML = toRateIconElement.innerHTML;
+    toRateIconElement.innerHTML = tempIcon;
+
+    // Ensure the new from_rate has only the icon
+    fromRateElement.innerHTML = ''; // Remove the number part, keeping the icon only
 
     // Swap the values of input elements
     const tempAmount = firstAmountInput.value;
@@ -197,7 +163,32 @@ export class AppComponent implements OnInit {
     const tempCurrency = firstCurrencySelect.value;
     firstCurrencySelect.value = secondCurrencySelect.value;
     secondCurrencySelect.value = tempCurrency;
+
+    // Ensure "1" stays in its current location by setting it explicitly
+    if (fromRateConstantElement) {
+      fromRateConstantElement.innerHTML = '1';
+    }
+
+    // Recalculate the conversion after the swap
+    this.calculate();
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
