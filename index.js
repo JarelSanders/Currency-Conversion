@@ -1,44 +1,46 @@
-// Import the express module, which is a web framework for Node.js
-const express = require('express')
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const dotenv = require('dotenv');
+const needle = require('needle');
+const path = require('path');
 
-// Import the cors module to handle Cross-Origin Resource Sharing
-const cors = require('cors')
+// Load environment variables from .env file
+dotenv.config();
 
-// Import the express-rate-limit module to limit repeated requests to public APIs and/or endpoints
-const rateLimit = require('express-rate-limit')
+const PORT = process.env.PORT || 5000;
+const app = express();
 
-// Import the dotenv module to load environment variables from a .env file into process.env
-require('dotenv').config()
+// Middleware: Logging HTTP requests
+app.use(morgan('dev'));
 
-// Will check to see if I have an environment variable called PORT. If not, will use port 5000
-const PORT = process.env.PORT || 5000
-
-// Initialize express application
-const app = express()
-
-// Define rate limiting settings
+// Rate limiting middleware
 const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 9, // Limit each IP to 3 requests per windowMs
-})
-
-
-// Set static folder to serve static files from the 'src' directory
-app.use(express.static('src'))
-
-// Apply the rate limiting middleware to all requests
-app.use(limiter)
+    windowMs: 60 * 1000, // 1 minute
+    max: 10, // Limit each IP to 10 requests per minute
+    message: 'Too many requests from this IP, please try again after a minute'
+});
+app.use('/api', limiter);
 
 // Trust the first proxy when running behind a proxy
-app.set('trust proxy', 1)
+app.set('trust proxy', 1);
 
-// Define routes, using the routes defined in the 'routes' module
-app.use('/api', require('./routes'))
+// Middleware: Enable CORS
+app.use(cors());
 
-// Enable CORS for all routes
-app.use(cors())
+// Serve Angular static files from the 'dist' directory
+app.use(express.static(path.join(__dirname, 'dist', 'currency-conversion')));
 
-// Start the server and listen on the defined PORT
-app.listen(PORT, () => 
-    console.log(`Server running on port ${PORT}`)
-)
+// Serve index.html for all routes (SPA routing)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'currency-conversion', 'index.html'));
+});
+
+// Route to handle currency conversion using external API
+app.use('/api', require('./routes/index'));
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
