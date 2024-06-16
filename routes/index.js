@@ -1,44 +1,35 @@
 const express = require('express');
-const url = require('url');
-const needle = require('needle');
-const apicache = require('apicache');
-
 const router = express.Router();
+const needle = require('needle'); // Import needle for HTTP requests
+require('dotenv').config(); // Load environment variables
 
 // Environment variables
-const API_BASE_URL = process.env.API_BASE_URL;
-const API_KEY_NAME = 'apikey'; // Fixed value as per the API's documentation
-const API_KEY_VALUE = process.env.API_KEY_VALUE;
+const API_BASE_URL = process.env.API_BASE_URL; // Example: 'https://api.fixer.io/latest'
+const API_KEY_NAME = process.env.API_KEY_NAME; // Example: 'apikey'
+const API_KEY_VALUE = process.env.API_KEY_VALUE; // Example: Your API key
 
-// Initialize cache
-let cache = apicache.middleware;
+// Route to handle currency conversion
+router.get('/convert', async (req, res) => {
+    const { base, target } = req.query; // Extract base and target currencies from query params
 
-// Define a route for the API
-router.get('/', cache('2minutes'), async (req, res) => {
-  try {
-    // Prepare the query parameters from the request
-    const params = new URLSearchParams({
-      ...url.parse(req.url, true).query
-    });
+    const apiUrl = `${API_BASE_URL}?base=${base}&symbols=${target}`;
 
-    // Construct the API request URL
-    const apiUrl = `${API_BASE_URL}?${params}`;
-    console.log('API Request URL:', apiUrl); // Log the final API request URL for debugging
+    try {
+        const response = await needle('get', apiUrl, {
+            headers: {
+                'User-Agent': 'your-app-name', // Replace with your app name
+                [API_KEY_NAME]: API_KEY_VALUE // Add API key header if required by the API
+            }
+        });
 
-    // Make the API request with the API key in the headers
-    const apiRes = await needle('get', apiUrl, {
-      headers: {
-        [API_KEY_NAME]: API_KEY_VALUE  // Use the API key name from environment variable
-      }
-    });
-
-    const data = apiRes.body;
-
-    // Send the response back to the client
-    res.status(200).json(data);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+        if (response.statusCode === 200) {
+            res.json(response.body); // Send JSON response back to client
+        } else {
+            throw new Error(`Request failed with status ${response.statusCode}`);
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message }); // Handle errors gracefully
+    }
 });
 
 module.exports = router;
