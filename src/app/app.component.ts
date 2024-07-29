@@ -1,7 +1,7 @@
-import { compileClassMetadata } from "@angular/compiler";
+// import { compileClassMetadata } from "@angular/compiler";
 import { Component, OnInit, Input, Output, NgModule } from "@angular/core";
-import { from } from "rxjs";
-import { isConstructorDeclaration } from "typescript";
+// import { from } from "rxjs";
+// import { isConstructorDeclaration } from "typescript";
 
 @Component({
   selector: "app-root",
@@ -10,7 +10,7 @@ import { isConstructorDeclaration } from "typescript";
 })
 export class AppComponent implements OnInit {
   title = "currencyConversion";
-  onlineStatud: any;
+  // onlineStatud: any;
   constructor() {}
   // showrate:boolean = false;
   to_rate: string = "";
@@ -44,7 +44,7 @@ calculate = (): void => {
   // Display static "1" in the from_rate_constant element
   const staticCurrency = document.getElementById("from_rate_constant") as HTMLElement;
   if (staticCurrency) {
-    staticCurrency.style.display = "block";
+    staticCurrency.innerText = "1";
   }
 
   // Display the equals sign
@@ -54,7 +54,7 @@ calculate = (): void => {
   }
 
   // Prepare the request URL for the backend API
-  const api_url = `/api?to=${second_currency}&from=${first_currency}&amount=${final_amount}`;
+    const api_url = `?to=${first_currency}&from=${second_currency}&amount=${final_amount}`;
 
   // Make the API request to the backend
   fetch(api_url)
