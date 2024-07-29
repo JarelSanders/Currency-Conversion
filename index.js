@@ -38,7 +38,7 @@ app.get('*', (req, res) => {
 });
 
 // Route to handle currency conversion using external API
-app.use('/api', require('./routes/index'));
+// app.use('/api', require('./routes/index'));
 
 // Start server
 app.listen(PORT, () => {
