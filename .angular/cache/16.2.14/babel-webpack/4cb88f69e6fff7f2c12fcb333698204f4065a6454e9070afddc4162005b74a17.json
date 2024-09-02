@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: true,\n  apiUrl: \"https://api.apilayer.com/currency_data/convert\",\n  apiKey: \"xXma0EqQVkLcrfU49m9VxVTmSOaPdmrG\"\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
