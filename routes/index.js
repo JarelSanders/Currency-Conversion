@@ -7,7 +7,11 @@ require('dotenv').config(); // Load environment variables
 const API_BASE_URL = process.env.API_BASE_URL; 
 const API_KEY_VALUE = process.env.API_KEY_VALUE; 
 
-
+console.log(`API URL: ${apiUrl}`);
+console.log(`Headers:`, {
+  apikey: API_KEY_VALUE,
+  "Cache-Control": "no-cache",
+});
 
 // Route to handle currency conversion
 router.get('/convert', async (req, res) => {

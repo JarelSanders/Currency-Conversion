@@ -52,9 +52,14 @@ export class AppComponent implements OnInit {
       equals.style.display = "block";
     }
 
+
+
     // Prepare the request URL for the backend API
     const apiUrl = `${environment.apiUrl}?to=${first_currency}&from=${second_currency}&amount=${final_amount}`;
     const apiKey = environment.apiKey;
+
+    
+
 
     // Make the API request to the backend
     fetch(apiUrl, {
