@@ -7,6 +7,9 @@ require('dotenv').config(); // Load environment variables
 const API_BASE_URL = process.env.API_BASE_URL; 
 const API_KEY_VALUE = process.env.API_KEY_VALUE; 
 
+console.log(`API_BASE_URL: ${API_BASE_URL}`);
+console.log(`API_KEY_VALUE: ${API_KEY_VALUE}`);
+
 // Route to handle currency conversion
 router.get('/convert', async (req, res) => {
     const { first_currency, second_currency, final_amount } = req.query; // Extract base and target currencies from query params
