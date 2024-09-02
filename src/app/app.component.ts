@@ -37,32 +37,27 @@ export class AppComponent implements OnInit {
     const second_currency = currencyTwo.value;
     const final_amount = amountOne.value;
 
-    const apiUrl = `${environment.apiUrl}?to=${first_currency}&from=${second_currency}&amount=${final_amount}`;
-    const apiKey: string = environment.apiKey;
     // Check if an amount is entered
     if (final_amount === "") {
       alert("Enter a value");
       return;
     }
 
-    // Display static "1" in the from_rate_constant element
-    const staticCurrency = document.getElementById(
-      "from_rate_constant"
-    ) as HTMLElement;
-    if (staticCurrency) {
-      staticCurrency.innerText = "1";
-    }
+    // Display static "1" in the from_rate element
+    this.from_rate = "1";
 
     // Display the equals sign
     const equals = document.getElementById("equal") as HTMLElement;
     if (equals) {
       equals.style.display = "block";
     }
+
     // Prepare the request URL for the backend API
-    const api_url = `${environment.apiUrl}?to=${first_currency}&from=${second_currency}&amount=${final_amount}`;
+    const apiUrl = `${environment.apiUrl}?to=${first_currency}&from=${second_currency}&amount=${final_amount}`;
+    const apiKey: string = environment.apiKey;
 
     // Make the API request to the backend
-    fetch(api_url, {
+    fetch(apiUrl, {
       method: "GET",
       headers: {
         apikey: apiKey, // Include the API key in headers
@@ -79,9 +74,10 @@ export class AppComponent implements OnInit {
         // Process API response
         if (result.query && result.query.amount) {
           console.log(
+    
             result.query.amount,
             result.query.from,
-            result.info.rate,
+            result.info.quote,
             result.query.to,
             result.result
           );
@@ -92,12 +88,7 @@ export class AppComponent implements OnInit {
           }
 
           // Update the exchange rate
-          const toRateElement = document.getElementById(
-            "to_rate"
-          ) as HTMLElement;
-          if (toRateElement) {
-            toRateElement.innerHTML = result.info.rate;
-          }
+          this.to_rate = result.info.quote;
         } else {
           console.error("Query or amount is undefined in the result:", result);
         }
@@ -105,25 +96,15 @@ export class AppComponent implements OnInit {
       .catch((error) => {
         console.log("error", error);
         // Log the full response if it is not JSON
-        fetch(api_url)
+        fetch(apiUrl)
           .then((response) => response.text())
           .then((text) => console.log("Response text:", text))
           .catch((err) => console.log("Error fetching response text:", err));
       });
 
     // Update currency icons
-    const toRateIconElement = document.getElementById(
-      "to_rate_icon"
-    ) as HTMLElement;
-    const fromRateIconElement = document.getElementById(
-      "from_rate_icon"
-    ) as HTMLElement;
-    if (toRateIconElement) {
-      toRateIconElement.innerText = to_rate_icon;
-    }
-    if (fromRateIconElement) {
-      fromRateIconElement.innerText = from_rate_icon;
-    }
+    this.to_rate_icon = to_rate_icon;
+    this.from_rate_icon = from_rate_icon;
 
     // Add event listeners for changes in currency and amount inputs
     if (currencyOne) {
