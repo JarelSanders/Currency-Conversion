@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
 
     // Prepare the request URL for the backend API
     const apiUrl = `${environment.apiUrl}?to=${first_currency}&from=${second_currency}&amount=${final_amount}`;
-    const apiKey: string = environment.apiKey;
+    const apiKey = environment.apiKey;
 
     // Make the API request to the backend
     fetch(apiUrl, {
