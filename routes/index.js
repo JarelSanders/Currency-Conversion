@@ -4,8 +4,9 @@ const needle = require('needle'); // Import needle for HTTP requests
 require('dotenv').config(); // Load environment variables
 
 // Environment variables
-const API_BASE_URL = process.env.API_BASE_URL; 
-const API_KEY_VALUE = process.env.API_KEY_VALUE; 
+const API_BASE_URL = process.env["API_BASE_URL"];
+const API_KEY_VALUE = process.env["API_KEY"]; 
+
 
 console.log(`API URL: ${apiUrl}`);
 console.log(`Headers:`, {
